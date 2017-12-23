@@ -46,4 +46,6 @@ public interface DaoHello {
     @Query("SELECT * FROM Hello ORDER by lastUpdated DESC LIMIT :size")
     Flowable<List<Hello>> getFlowableHellos(Integer size);
 
+    @Query("SELECT * FROM Hello ORDER by lastUpdated DESC LIMIT :size")
+    LiveData<List<Hello>> getLiveHellos(Integer size);
 }

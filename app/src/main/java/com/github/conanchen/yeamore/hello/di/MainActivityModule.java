@@ -15,7 +15,8 @@ public abstract class MainActivityModule {
 //            FragmentMyBuildersModule.class
 //    })
 
-    abstract HelloActivity contributeMainActivity();
+    @ContributesAndroidInjector
+    abstract HelloActivity contributeHelloActivity();
 //
 //    @ContributesAndroidInjector
 //    abstract WordExamActivity contributeWordExamActivity();

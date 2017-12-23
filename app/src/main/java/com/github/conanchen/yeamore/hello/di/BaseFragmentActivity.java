@@ -12,15 +12,6 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public abstract class BaseFragmentActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
-
-    private final LifecycleRegistry registry = new LifecycleRegistry(this);
-
-    @Override
-    public LifecycleRegistry getLifecycle() {
-        return registry;
-    }
-
-
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 

@@ -12,12 +12,12 @@ import com.google.common.base.Strings;
  */
 
 @Entity(indices = {
-        @Index(value = {"id", "lastUpdated"})
+        @Index(value = {"id", "created"})
 })
 public class Hello {
     @PrimaryKey
     @NonNull
-    public int id;
+    public long id;
     public String message;
     public long created;
     public long lastUpdated;
@@ -25,7 +25,7 @@ public class Hello {
     public Hello() {
     }
 
-    private Hello(@NonNull int id, String message, long created, long lastUpdated) {
+    private Hello(@NonNull long id, String message, long created, long lastUpdated) {
         this.id = id;
         this.message = message;
         this.created = created;
@@ -37,7 +37,7 @@ public class Hello {
     }
 
     public static final class Builder {
-        private int id;
+        private long id;
         private String message;
         private long created;
         private long lastUpdated;
@@ -57,7 +57,27 @@ public class Hello {
             if (!missing.isEmpty()) {
                 throw new IllegalStateException("Missing required properties:" + missing);
             }
-            return null;
+            return new Hello(id, message, created, lastUpdated);
+        }
+
+        public Builder setId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+
+        public Builder setCreated(long created) {
+            this.created = created;
+            return this;
+        }
+
+        public Builder setLastUpdated(long lastUpdated) {
+            this.lastUpdated = lastUpdated;
+            return this;
         }
     }
 }

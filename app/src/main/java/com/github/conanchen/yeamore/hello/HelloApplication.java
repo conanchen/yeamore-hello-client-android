@@ -2,8 +2,10 @@ package com.github.conanchen.yeamore.hello;
 
 import android.app.Activity;
 import android.app.Service;
+import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.stetho.Stetho;
 import com.github.conanchen.yeamore.hello.di.AppInjector;
 import com.github.conanchen.yeamore.hello.repository.RepositoryFascade;
 
@@ -33,11 +35,11 @@ public class HelloApplication extends MultiDexApplication implements HasActivity
 //            Fabric.with(this, new Crashlytics());
 //            new ANRWatchDog().start();
 //        }
-//        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
 //            Timber.plant(new Timber.DebugTree());
 //            ARouter.openDebug();
-//            initStethoDebugBridge();
-//        }
+            initStethoDebugBridge();
+        }
 
         AppInjector.init(this);
 
@@ -76,19 +78,19 @@ public class HelloApplication extends MultiDexApplication implements HasActivity
 //                    // Provider installation failed
 //                }
 //            };
-//    private void initStethoDebugBridge() {
-//        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-//        StrictMode.setVmPolicy(builder.build());
-//
-//        if (BuildConfig.DEBUG) {
-////            Stetho.initialize(
-////                    Stetho.newInitializerBuilder(this)
-////                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-////                            //.enableWebKitInspector(new CouchbaseInspectorModulesProvider.Builder(this).build())
-////                            .build());
-//            Stetho.initializeWithDefaults(this);
-//        }
-//    }
+    private void initStethoDebugBridge() {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+        if (BuildConfig.DEBUG) {
+//            Stetho.initialize(
+//                    Stetho.newInitializerBuilder(this)
+//                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                            //.enableWebKitInspector(new CouchbaseInspectorModulesProvider.Builder(this).build())
+//                            .build());
+            Stetho.initializeWithDefaults(this);
+        }
+    }
 
 
     @Override

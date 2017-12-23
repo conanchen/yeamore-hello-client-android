@@ -8,15 +8,15 @@ import javax.inject.Inject;
  */
 public class RoomFascade {
 
-    public final DaoHello daoUser;
+    public final DaoHello daoHello;
 
     @Inject
     String strAmir;
 
 
     @Inject
-    public RoomFascade(DaoHello daoUser) {
-        this.daoUser = daoUser;
+    public RoomFascade(DaoHello daoHello) {
+        this.daoHello = daoHello;
         System.out.println(strAmir);
 
     }

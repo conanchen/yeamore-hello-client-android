@@ -1,12 +1,16 @@
 package com.github.conanchen.yeamore.hello.repository;
 
+import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
 import com.github.conanchen.yeamore.hello.grpc.GrpcFascade;
 import com.github.conanchen.yeamore.hello.grpc.HelloReply;
 import com.github.conanchen.yeamore.hello.grpc.HelloService;
+import com.github.conanchen.yeamore.hello.room.Hello;
 import com.github.conanchen.yeamore.hello.room.RoomFascade;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,7 +39,18 @@ public class HelloRepository {
             @Override
             public void onHelloReply(HelloReply helloReply) {
                 Log.i(TAG, String.format("HelloReply: %s", helloReply.getMessage()));
+                Hello hello = Hello.builder()
+                        .setId(helloReply.getId())
+                        .setMessage(helloReply.getMessage())
+                        .setCreated(helloReply.getCreated())
+                        .setLastUpdated(helloReply.getLastUpdated())
+                        .build();
+                roomFascade.daoHello.save(hello);
             }
         });
+    }
+
+    public LiveData<List<Hello>> loadHellos(String login) {
+        return roomFascade.daoHello.getLiveHellos(100);
     }
 }
