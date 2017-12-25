@@ -33,20 +33,21 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 public class HelloViewModel extends ViewModel {
+
     @VisibleForTesting
-    final MutableLiveData<String> helloName = new MutableLiveData<>();
+    final MutableLiveData<Long> helloTime = new MutableLiveData<>();
     private final LiveData<List<Hello>> hellos;
+    private HelloRepository helloRepository;
 
     @SuppressWarnings("unchecked")
     @Inject
     public HelloViewModel(HelloRepository helloRepository) {
-
-        hellos = Transformations.switchMap(helloName, name -> {
-            if (name == null) {
+        this.helloRepository = helloRepository;
+        hellos = Transformations.switchMap(helloTime, time -> {
+            if (time == null) {
                 return AbsentLiveData.create();
             } else {
-                helloRepository.sayHello(name);
-                return helloRepository.loadHellos(name);
+                return helloRepository.loadHellos(time);
             }
         });
 
@@ -54,7 +55,7 @@ public class HelloViewModel extends ViewModel {
 
     @VisibleForTesting
     public void setHelloName(String helloName) {
-        this.helloName.setValue(helloName);
+        helloRepository.sayHello(helloName);
     }
 
     @VisibleForTesting
@@ -63,9 +64,7 @@ public class HelloViewModel extends ViewModel {
     }
 
     @VisibleForTesting
-    public void retry() {
-        if (this.helloName.getValue() != null) {
-            this.helloName.setValue(this.helloName.getValue());
-        }
+    public void reloadHellos() {
+        this.helloTime.setValue(System.currentTimeMillis());
     }
 }

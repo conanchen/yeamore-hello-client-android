@@ -50,7 +50,7 @@ public class HelloRepository {
         });
     }
 
-    public LiveData<List<Hello>> loadHellos(String login) {
+    public LiveData<List<Hello>> loadHellos(Long time) {
         return roomFascade.daoHello.getLiveHellos(100);
     }
 }
